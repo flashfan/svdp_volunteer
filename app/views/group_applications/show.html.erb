@@ -1,0 +1,91 @@
+<% provide(:title, "Application Form") %>
+<h1>Group Application Form</h1>
+<h2><%=  User.find(@group_application.user_id).name %></h2>
+
+<div class="row">
+  <div class="span6 offset3">
+  <%= form_for(@group_application) do |f| %>	  
+	  <fieldset>
+    <legend>GROUP INFORMATION</legend>
+	<label for="group_application_group_name">Business/Group Name</label>
+    <%= f.text_field :group_name, readonly: true %>
+	
+	<label for="group_application_relationship">Relation between you and the group</label>
+    <%= f.text_field :relationship, readonly: true %>
+
+    <%= f.label :address %>
+    <%= f.text_field :address, readonly: true %>
+	<div class="row">
+	  <div class="span2">	
+        <%= f.label :city %>
+        <%= f.text_field :city, readonly: true %>
+	  </div>
+	  <div class="span2">	
+        <%= f.label :state %>
+        <%= f.text_field :state, readonly: true %>
+	  </div>
+	  <div class="span2">
+	    <%= f.label :zip_code %>
+        <%= f.text_field :zip_code, readonly: true %>
+	  </div>
+	</div>	
+  </fieldset>
+  <br />
+  <fieldset>
+    <legend>EMERGENCY CONTACT INFORMATION</legend>
+	<label for="group_application_emergency_name">Contact Name</label>
+    <%= f.text_field :emergency_name, readonly: true %>
+	
+	<label for="group_application_emergency_relationship">Relationship to you</label>
+    <%= f.text_field :emergency_relationship, readonly: true %>
+	
+	<label for="group_application_emergency_phone">Phone</label>
+    <%= f.text_field :emergency_phone, readonly: true %>
+	
+	<label for="group_application_emergency_email">Email</label>
+    <%= f.text_field :emergency_email, readonly: true %>	
+  </fieldset>
+  <br />
+  <fieldset>
+    <legend>HISTORY</legend>
+	<p>To your knowledge, has anyone in the group ever been convicted of a criminal offense (felony or misdemeanor)? Answer 
+yes if anyone has entered a plea agreement, including a deferred sentence or deferred judgment arrangement in connection 
+with a criminal case:</p>
+
+  <% if @group_application.criminal_history %>
+    <p><b> Yes </b></p>
+    <%= f.text_area :explanation, class: "field", rows: 5, readonly: true%>	
+  <% else %>
+    <p><b> No </b></p>
+  <% end %>
+  </fieldset>
+  <br />
+  <fieldset>
+    <legend>GROUP MEMBERS</legend>
+	<div class="row">
+	  <div class="span5">
+	  <label for="group_application_group_size">How many people in this group?</label>
+	  </div>
+	  <div class="span1">
+        <%= f.text_field :group_size, readonly: true %>
+	  </div>
+	</div>
+	<%= f.label :group_members %>
+	<%= f.text_area :group_members, class: "field", rows: 10, placeholder: "Please list all group member names and emails (if applicable)...", readonly: true %>
+	
+  </fieldset>
+	  
+	 
+    <% end %>
+	<div class="row">
+	  <div class="span2">	
+	    <%= link_to "Back", root_path, class: "btn btn-large btn-primary" %>
+	  </div>
+	  <div class="span2 offset2">
+	    <%= link_to "Edit", edit_group_application_path(@group_application), class: "btn btn-large btn-primary pull-right" %>
+	  </div>
+	</div>
+	  
+
+    </div>
+</div>

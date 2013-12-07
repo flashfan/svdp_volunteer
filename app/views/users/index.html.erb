@@ -1,0 +1,80 @@
+<% provide(:title, 'All volunteers') %>
+<h1>Volunteers</h1>
+
+<h3>Search Filters</h3>
+
+<%= form_tag(users_path, method: "get") do %>
+  <div class="row">
+    <div class="span3"> 
+      <%= label_tag(:name, "Name") %>
+      <%= text_field_tag :name, @name %>
+	</div>
+    <div class="span3">
+      <%= label_tag(:email, "Email") %>
+      <%= text_field_tag :email, @email %>
+  	</div>
+    <div class="span3">
+      <%= label_tag(:phone, "Phone") %>
+      <%= text_field_tag :phone, @phone %>
+  	</div>
+    <div class="span3">
+      <%= label_tag(:status, "Status") %>
+      <%= select_tag :status, options_for_select(@status_array2, @status), class: 'date-select-mid'%>
+	  <%= submit_tag("Search", class: "btn  btn-primary pull-right") %>
+	</div>
+  </div>  
+<% end %>
+
+<br />
+
+<h3>New Requests</h3>
+
+<% if @new_users.size > 0 %>
+  <div class="row">  
+     <div class="span4">
+       <b>Name</b>
+	 </div>
+	 <div class="span4">
+	   <b>Contact Information & Preference</b>
+	 </div>
+	 
+	 <div class="span4">
+	   <b>Status</b>
+	 </div>
+  </div>
+  <br />
+  <ul class="users">
+    <%= render @new_users %>
+  </ul>
+
+<% else %>
+  <p>No new request found</p>
+<% end %>
+
+<br />
+<br />
+<br />
+
+<h3>Existing Volunteers</h3>
+<% if @existing_users.size > 0 %>
+  <%= will_paginate @existing_users %>
+  <div class="row">  
+     <div class="span4">
+       <b>Name</b>
+	 </div>
+	 <div class="span4">
+	   <b>Contact Information & Preference</b>
+	 </div>
+	 
+	 <div class="span4">
+	   <b>Status</b>
+	 </div>
+  </div>
+  <br />
+  <ul class="users">
+    <%= render @existing_users %>
+  </ul>
+  <%= will_paginate @existing_users %>
+<% else %>
+  <p>No existing volunteer found</p>
+<% end %>

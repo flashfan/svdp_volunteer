@@ -1,0 +1,49 @@
+<%= form_for [@user, @activity], remote: true do |f| %>
+  <br />
+  <div class ="row">
+    <div class="span6">
+    <%=f.label :start_time, 'Start Time' %>
+    <%=f.datetime_select :start_time,
+						{start_year: Date.today.year, end_year: Date.today.year+3, use_short_month: true, minute_step: 30},
+						{:class => 'date-select-mini'}%>
+	</div>
+	<div class="span2">
+      <% hours_array = (1..20).map { |num| [(num/2.0).to_s, num/2.0]} %>
+      <%= f.label :hour_num, 'Hours' %>
+      <%= f.select :hour_num, options_for_select(hours_array)%>
+	</div>
+  </div>
+  <br />
+  <div class ="row">
+	<div class="span4">
+	  <% projects_array = Project.all.map { |p| [p.name, p.id] } %>
+      <%=f.label :project%>
+      <%=f.select :project, options_for_select(projects_array) %>
+    </div>
+  </div>
+  <br />
+  <div class ="row">
+	<div class="span2">
+      <%=f.label :period, "Repeats" %>
+      <%=f.select :period, Activity::REPEATS,{}, :onchange => "showPeriodAndFrequency(this.value);" %>
+	  </div>
+    <div class="span3" id = "frequency" style = "display:none;">
+      <%=f.label :frequency, :id => "period"%>
+      <%=f.select :frequency, (1..12).to_a %> 
+    </div>
+	<div class="span3" id = "monthnum" style = "display:none;">
+      <%=f.label :month_num, "For ? Months" %>
+      <%=f.select :month_num, (1..24).to_a %>
+    </div>
+  </div>
+  <br />
+  <div class ="row">
+	<div class="span8">
+      <%=f.label :remark %>
+      <%=f.text_area :remark, :rows => 4 %>
+	</div>
+  </div>
+  <%=f.hidden_field :user_id, :value => @user.id %>
+  <%=f.submit 'Create' %> 
+
+<% end %>

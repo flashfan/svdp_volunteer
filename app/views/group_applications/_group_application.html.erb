@@ -1,0 +1,14 @@
+<li>
+  <span class="content">Group Name: <%= group_application.group_name %></span>
+  <span class="timestamp">
+    Last updated at <%= group_application.updated_at %>.
+  </span>  
+  <%= link_to "detail", group_application %>
+  <%= link_to "edit", edit_group_application_path(group_application) %>
+  <% if current_user.admin? %>
+  <%= link_to "delete", group_application, method: :delete,
+                                     data: { confirm: 'You sure?' } %>
+  <% end %>
+  
+
+</li>

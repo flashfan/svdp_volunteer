@@ -1,0 +1,15 @@
+<% provide(:title, "Edit Application Form") %>
+<h1>Update Individual Application Form</h1>
+
+<h2><%=  User.find(@individual_application.user_id).name %></h2>
+
+<div class="row">
+  <div class="span6 offset3">
+  <%= form_for(@individual_application) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+	  <%= render 'confirmation_step', :f => f %>
+      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+    <% end %>
+
+  </div>
+</div>

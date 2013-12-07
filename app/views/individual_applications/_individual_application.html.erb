@@ -1,0 +1,14 @@
+<li>
+  <span class="timestamp">
+    Last updated at <%= individual_application.updated_at %>.
+  </span>  
+  <%= link_to "detail", individual_application %>
+  <%= link_to "edit", edit_individual_application_path(individual_application) %>
+  <% if current_user.admin? %>
+  <%= link_to "delete", individual_application, method: :delete,
+                                     data: { confirm: 'You sure?' } %>
+  <% end %>
+									 
+  
+
+</li>

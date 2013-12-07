@@ -1,0 +1,14 @@
+<% if !@group_application.last_step? %>
+<h2>Step 4 of 5: Group Members</h2>
+<% end %>
+  
+    <div class="row">
+	  <div class="span5">
+	  <label for="group_application_group_size">How many people in this group?</label>
+	  </div>
+	  <div class="span1">
+        <%= f.text_field :group_size %>
+	  </div>
+	</div>
+	<%= f.label :group_members %>
+	<%= f.text_area :group_members, class: "field", rows: 10, placeholder: "Please list all group member names and emails (if applicable)..." %>

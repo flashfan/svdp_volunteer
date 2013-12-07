@@ -1,0 +1,94 @@
+<% provide(:title, 'Schedule') %>
+<% if @user.admin? %>
+  <h1>All Schedule</h1>
+<% else %>
+  <h1><%=@user.name%>'s Schedule</h1>
+<% end %>
+
+
+<% if current_user.admin? && !@user.admin? %>
+  <%=link_to 'New Activity', new_user_activity_path(@user), remote: true %>
+<% end %>
+
+<script> 
+  $(document).ready(function(){
+      // page is now ready, initialize the calendar...
+      $('#calendar').fullCalendar({
+	      <% if current_user.admin? %>
+            editable: true,
+		  <% else %>
+		    editable: false,
+		  <% end %>
+		 
+          header: {
+              left: 'prev,next today',
+              center: 'title',
+              right: 'month,agendaWeek,agendaDay'
+          },
+		  <% if @user.admin? %>
+		    defaultView: 'agendaWeek',
+		  <% else %>
+		    defaultView: 'month',
+		  <% end %>
+          height: 700,
+          slotMinutes: 30,
+		  allDaySlot: false,
+		  minTime: 8,
+		  maxTime: 18,
+		  eventSources: [{
+            url: '/events/<%= @user.id -%>/get_events',
+            textColor: 'black',
+            ignoreTimezone: false
+          }],
+		
+          timeFormat: 'h:mm t{ - h:mm t} ',
+          dragOpacity: "0.5",
+          eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc){
+//              if (confirm("Are you sure about this change?")) {
+                  moveEvent(event, dayDelta, minuteDelta, allDay);
+//              }
+//              else {
+//                  revertFunc();
+//              }
+          },
+          
+          eventResize: function(event, dayDelta, minuteDelta, revertFunc){
+//              if (confirm("Are you sure about this change?")) {
+                  resizeEvent(event, dayDelta, minuteDelta);
+//              }
+//              else {
+//                  revertFunc();
+//              }
+          },
+          
+		  <% if current_user.admin? %>
+            eventClick: function(event, jsEvent, view){
+              showEventDetails(event);
+            },
+		  <% end %>
+      
+      
+      
+      
+      });
+  });
+</script>
+<div>
+  <div id='calendar'>
+  </div>
+</div>
+<div id = "desc_dialog" style ="display:none;">
+  <br />
+  <div id = "event_desc"></div>
+  <div id = "event_time"></div>
+  <div id = "event_project"></div>
+  <div id = "event_remark"></div><br />
+  <div id = "event_actions">
+    <span id = "edit_event"></span>
+    <span id = "delete_event"></span>
+  </div>
+</div>
+<div id = "create_event_dialog" style ="display:none;">
+  <div id = "create_event">
+  </div>
+</div>

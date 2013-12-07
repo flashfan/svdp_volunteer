@@ -1,0 +1,30 @@
+<% if !@individual_application.last_step? %>
+<h2>Step 3 of 5: Personal References</h2>
+<h5>Please list one family member and one other person</h5>
+<% end %>
+	<label for="individual_application_reference1_name">Family Member Name</label>
+	<%= f.text_field :reference1_name %>
+	
+	<label for="individual_application_reference1_relationship">Relationship to you</label>
+    <%= f.text_field :reference1_relationship %>
+	
+	<label for="individual_application_reference1_phone">Phone</label>
+    <%= f.text_field :reference1_phone %>
+	
+	<label for="individual_application_reference1_email">Email</label>
+    <%= f.text_field :reference1_email %>
+	
+	<legend></legend>
+
+	<label for="individual_application_reference2_name">Reference Name</label>
+	<%= f.text_field :reference2_name %>
+	
+	<label for="individual_application_reference2_relationship">Relationship to you</label>
+    <%= f.text_field :reference2_relationship %>
+	
+	<label for="individual_application_reference2_phone">Phone</label>
+    <%= f.text_field :reference2_phone %>
+	
+	<label for="individual_application_reference2_email">Email</label>
+    <%= f.text_field :reference2_email %>
+

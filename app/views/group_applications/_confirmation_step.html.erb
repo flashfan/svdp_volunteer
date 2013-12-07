@@ -1,0 +1,22 @@
+ <% if @group_application.new_record? %>
+ <h2>Step 5 of 5: Confirmation</h2>
+ <% end %>
+  <fieldset>
+    <legend>GROUP INFORMATION</legend>
+	<%= render 'group_information_step', :f => f %>
+  </fieldset>
+  <br />
+  <fieldset>
+    <legend>EMERGENCY CONTACT INFORMATION</legend>
+	<%= render 'emergency_contact_step', :f => f %>	
+  </fieldset>
+  <br />
+  <fieldset>
+    <legend>HISTORY</legend>
+	<%= render 'group_history_step', :f => f %>
+  </fieldset>
+  <br />
+  <fieldset>
+    <legend>GROUP MEMBERS</legend>
+	<%= render 'group_members_step', :f => f %>
+  </fieldset>

@@ -1,0 +1,39 @@
+<%= form_for @activity, remote: true do |f| %>
+  <div class ="row">
+    <div class="span6">
+    <%=f.label :start_time, 'Start Time' %>
+    <%=f.datetime_select :start_time,
+						{start_year: Date.today.year, end_year: Date.today.year+3, use_short_month: true, minute_step: 30},
+						{:class => 'date-select-mini'}%>
+	</div>
+	<div class="span2">
+      <% hours_array = (1..20).map { |num| [(num/2.0).to_s, num/2.0]} %>
+      <%= f.label :hour_num, 'Hours' %>
+      <%= f.select :hour_num, options_for_select(hours_array, @activity.hour_num)%>
+	</div>
+  </div>
+  <br />
+  <div class ="row">
+	<div class="span4">
+	  <% projects_array = Project.all.map { |p| [p.name, p.id] } %>
+      <%=f.label :project%>
+      <%=f.select :project, options_for_select(projects_array, @activity.project) %>
+    </div>
+  </div>
+  <br />
+  <div class ="row">
+	<div class="span8">
+      <%=f.label :remark %>
+      <%=f.text_area :remark, :rows => 4 %>
+	</div>
+  </div>
+
+  <% if @activity.activity_series %>
+    <%= f.submit 'Update Only This Occurrence' %>
+    <%= f.submit 'Update All Occurrence' %>
+    <%= f.submit 'Update All Following Occurrence' %>
+  <% else %>
+    <%= f.submit 'Update' %>
+  <% end %>
+
+<% end %>

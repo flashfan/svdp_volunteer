@@ -1,0 +1,17 @@
+
+<% if @activity %> 
+  <% if @activity.save %>
+    $('#calendar').fullCalendar( 'refetchEvents' );
+    $('#create_event_dialog').dialog('destroy');
+  <% end %>
+<% end %>
+
+<% if @activity_series %>
+  <% if @activity_series.save %>
+    $('#calendar').fullCalendar( 'refetchEvents' );
+    $('#create_event_dialog').dialog('destroy');
+  <% else %>
+    alert("<%= @activity_series.errors.full_messages %>");
+  <% end %>
+ 
+<% end %>

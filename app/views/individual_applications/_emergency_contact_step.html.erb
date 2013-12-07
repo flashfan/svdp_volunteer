@@ -1,0 +1,14 @@
+<% if !@individual_application.last_step? %>
+<h2>Step 2 of 5: Emergency Contact Information</h2>
+<% end %>
+	<label for="individual_application_emergency_name">Contact Name</label>
+    <%= f.text_field :emergency_name %>
+	
+	<label for="individual_application_emergency_relationship">Relationship to you</label>
+    <%= f.text_field :emergency_relationship %>
+	
+	<label for="individual_application_emergency_phone">Phone</label>
+    <%= f.text_field :emergency_phone %>
+	
+	<label for="individual_application_emergency_email">Email</label>
+    <%= f.text_field :emergency_email %>

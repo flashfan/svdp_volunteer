@@ -1,0 +1,9 @@
+
+$('#create_event').html("<%= escape_javascript(render 'new_form') %>");
+
+$('#create_event_dialog').dialog({
+        title: 'New Activity for <%= @user.name -%> - <%= Status.find(@user.status).name %>',
+        modal: true,
+        width: 650,
+        close: function(event, ui) { $('#create_event_dialog').dialog('destroy')}
+    });

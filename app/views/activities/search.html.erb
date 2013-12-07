@@ -1,0 +1,67 @@
+<% provide(:title, 'Schedule search') %>
+<h1>Schedule Search</h1>
+
+<h3>Search Filters</h3>
+
+<%= form_tag(activities_search_path, method: "get") do %>
+  <div class="row">
+    <div class="span4"> 
+      <%= label_tag(:name, "Volunteer Name") %>
+      <%= text_field_tag :name, @name %>
+	</div>
+	
+    <div class="span4">
+      <%= label_tag(:start_date, "Start date") %>
+      <%= date_select :date, :start_date, 
+	                  {use_short_month: true, :default => @start_date, :include_blank=> @start_date.nil? },
+					  {:class => 'date-select-small'} %>
+  	</div>
+
+    <div class="span4">
+      <%= label_tag(:end_date, "End Date") %>
+      <%= date_select :date, :end_date, 
+	                  {use_short_month: true, :default => @end_date, :include_blank=> @end_date.nil?},
+					  {:class => 'date-select-small'} %>
+  	</div>
+  </div>
+  <div class="row"> 
+    <div class="span12">
+     <%= label_tag :project %>	  
+  	</div>
+    <div class="span4">
+      <% projects_array = Project.all.map { |p| [p.name, p.id] } %>      
+      <%= select_tag :project, options_for_select(projects_array.unshift(['----', nil]), @project) %>
+	  
+  	</div>   
+    <div class="span3">
+	   <%= submit_tag("Search", class: "btn  btn-primary") %>
+	</div>
+  </div>  
+<% end %>
+
+<br />
+
+<h3>Search Results</h3>
+
+<% if @activities.size > 0 %>
+  <%= will_paginate @activities %>
+  <div class="row">  
+     <div class="span4">
+       <b>Volunteer Name</b>
+	 </div>
+	 <div class="span4">
+	   <b>Volunteer Time</b>
+	 </div>	 
+	 <div class="span4">
+	   <b>Project</b>
+	 </div>
+  </div>
+  <br />
+  <ul class="users">
+    <%= render @activities %>
+  </ul>
+  <%= will_paginate @activities %>
+<% else %>
+  <p>No record found</p>
+<% end %>
+

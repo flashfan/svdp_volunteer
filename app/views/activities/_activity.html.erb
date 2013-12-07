@@ -1,0 +1,25 @@
+<li>
+
+   <div class="row">  
+     <div class="span2">
+       <% user = User.find(activity.user_id) %>
+	   <%= link_to user.name, user %>
+	 </div>
+	 <div class="span2">
+	    <%= link_to "schedule", user_activities_path(user) %>&nbsp;
+	    <%= link_to "hours", user_volunteer_hours_path(user) %>
+	 </div>
+	 <div class="span4">
+	   <% end_time = activity.start_time + activity.hour_num.hour  %>
+	   <%= activity.start_time.to_date %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   <%= activity.start_time.strftime("%I:%M%p")%>&nbsp;-&nbsp;<%= end_time.strftime("%I:%M%p")%>
+	 </div>
+	 
+	 <div class="span4">
+	   <% project = Project.find(activity.project) %>
+	   <%= project.name %>
+	 </div>
+
+   </div>
+
+</li>

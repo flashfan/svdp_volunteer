@@ -1,0 +1,130 @@
+<% provide(:title, 'Volunteer Hours') %>
+<h1><%= @user.name %>'s Volunteer Hours</h1>
+
+
+  <div class="row">
+    <div class="span7">
+	  <h2>Volunteer hour history</h2>
+      <%= form_tag(user_volunteer_hours_url(@user), method: "get") do %>
+      
+       <%= label_tag(:start_date, "Start date") %>
+	   <%= date_select :date, :start_date, 
+	                  {start_year: Date.today.year-5, end_year: Date.today.year, use_short_month: true, :default => @start_date, :include_blank=> @start_date.nil?},
+					  {:class => 'date-select-small'} %>
+	   <div class="row"> <br />	</div>		  
+	   <%= label_tag(:end_date, "End date") %>
+       <div class="row">  
+        <div class="span4">			           
+		  <%= date_select :date, :end_date, 
+	                  {start_year: Date.today.year-5, end_year: Date.today.year, use_short_month: true, :default => @end_date, :include_blank=> @end_date.nil?},
+					  {:class => 'date-select-small'} %>
+        </div>
+
+        <div class="span2">
+          <%= submit_tag("Search", class: "btn  btn-primary") %>
+        </div>
+      </div>
+      <% end %>
+	  <br />
+
+      <% if !@volunteer_hours.any? %>
+        <p> No volunteer hour found</p>
+      <% else %>
+
+        <div class="row">  
+          <div class="span2">
+            <b>Date</b>
+          </div>
+          <div class="span3">
+	        <b>Project</b>
+          </div>
+          <div class="span1">
+	        <b>Hours</b>
+          </div>
+          </div>
+
+          <br />
+          <ul class="users">
+            <% total_hours = 0 %>
+            <% @volunteer_hours.each do |hour| %>
+            <% project = Project.find(hour.project) %>
+            <% total_hours += hour.hours_worked %>
+            <li>
+              <div class="row">  
+                <div class="span2">
+                  <%= hour.date_worked %>
+	            </div>
+	            <div class="span3">
+                  <%= project.name %>
+		        </div>
+	            <div class="span1">
+                  <%= hour.hours_worked %>			
+		        </div>
+				<% if current_user.admin? %>
+				<div class="span1">
+                  <%= link_to "delete", [hour.user, hour], method: :delete,
+                                     data: { confirm: 'You sure?' } %>
+				</div>
+                <% end %>
+				
+	          </div>
+            </li>
+            <% end %>
+          </ul>
+
+          <br />
+
+          <div class="row">  
+            <div class="span2 offset3">
+              <b>Total Hours:</b>
+            </div>
+            <div class="span2">
+              <%= total_hours %>
+            </div>
+          </div>
+
+        <% end %>
+    </div>
+    <div class="span4 offset1">
+    <h2>New volunteer hours</h2>
+
+	
+    <%= form_for([@user, @user.volunteer_hours.build]) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+	  
+	  <%= f.label :date_worked %>
+	  <%= f.date_select :date_worked, 
+	                  {start_year: Date.today.year-2, end_year: Date.today.year, use_short_month: true},
+					  {:class => 'date-select-small'} %>
+      
+	  <div class="row"> <br />	</div>	
+      <% hours_array = (1..20).map { |num| [(num/2.0).to_s, num/2.0]} %>
+      <%= f.label :hours_worked %>
+      <%= f.select( :hours_worked, options_for_select(hours_array) ) %>
+      
+	  <div class="row"> <br />	</div>	
+	  <% projects_array = Project.all.map { |p| [p.name, p.id] } %>
+      <%= f.label :project %>
+      <%= f.select( :project, options_for_select(projects_array) ) %>
+
+
+      <div class="row"> <br />	</div>	
+	  <%= f.submit "Submit", class: "btn btn-primary pull-right" %>
+    <% end %>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

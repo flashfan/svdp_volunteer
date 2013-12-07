@@ -1,0 +1,40 @@
+<% if !user.admin? %>
+<li>
+
+   <div class="row">  
+     <div class="span4">
+      <p><%= link_to user.name, user %></p>
+	  <%= link_to "edit", edit_user_path(user) %>&nbsp;
+	  <% if user.status > 1 %>
+	    <%= link_to "schedule", user_activities_path(user) %>&nbsp;
+	    <%= link_to "hours", user_volunteer_hours_path(user) %>&nbsp;
+	  <% end %>
+      <%= link_to "delete", user, method: :delete,
+                                  data: { confirm: "You sure?" } %>
+	 </div>
+	 <div class="span4">
+	   <% if user.contact_preference=='email' %>
+	     <p><em>Email: <%= user.email %></em></p> Phone: <%= user.phone %>
+	   <% else %>
+	     <p>Email: <%= user.email %></p> <em>Phone: <%= user.phone %></em>
+	   <% end %>
+	 </div>
+	 
+	 <div class="span4 padding-up">
+	   <%= form_tag("/users/change_status", :method => "post") do %>	     
+	     <div class="row">  
+           <div class="span2"> 
+            <%= select_tag :status, options_for_select(@status_array, user.status) %>
+		   </div>
+		 <%= hidden_field_tag(:user_id, user.id) %>
+	     <div class="span2">         
+           <%= submit_tag("Change Status", class: "btn btn-primary pull-right") %>
+         </div>
+         </div>		 
+       <% end %>
+	 </div>
+
+   </div>
+
+</li>
+<% end %>

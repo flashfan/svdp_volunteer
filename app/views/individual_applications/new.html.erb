@@ -1,0 +1,31 @@
+<% provide(:title, 'Individual application') %>
+<h1>New Individual Application</h1>
+<h2><%=  User.find(@individual_application.user_id).name %></h2>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@individual_application) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+	  <%= render "#{@individual_application.current_step}_step", :f => f %>
+      
+	  <div class="row">
+	    <div class="span2">
+          <%= f.submit "Back", class: "btn btn-large btn-primary", :name => "back_button" unless @individual_application.first_step? %>
+		</div>
+		<% if  @individual_application.first_step? %>
+		  <div class="span2 offset4">
+		    <%= f.submit "Continue", class: "btn btn-large btn-primary pull-right" %>
+		  </div>
+		<% elsif @individual_application.last_step? %>
+		  <div class="span2 offset2">
+		    <%= f.submit "Submit", class: "btn btn-large btn-primary pull-right" %>
+		  </div>
+		<% else %>
+		  <div class="span2 offset2">
+		    <%= f.submit "Continue", class: "btn btn-large btn-primary pull-right" %>
+		  </div>
+		<% end %> 
+	  </div>
+    <% end %>
+  </div>
+</div>

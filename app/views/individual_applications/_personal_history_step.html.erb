@@ -1,0 +1,39 @@
+<% if !@individual_application.last_step? %>
+<h2>Step 4 of 5: Personal History</h2>
+<% end %>
+
+  <p>Have you ever been convicted of a criminal offense (felony or misdemeanor)? Answer yes if you have 
+entered a plea agreement, including a deferred sentence or deferred judgment arrangement in 
+connection with a criminal case:</p>
+	<div class="row">
+	  <div class="span1">
+		<label class="radio">
+		  <%= f.radio_button :criminal_history, "false" , checked: true%>No		  
+        </label>
+      </div>
+	  <div class="span1">
+        <label class="radio">
+		  <%= f.radio_button :criminal_history, "true" %>Yes
+        </label>
+	  </div>
+	</div>
+	
+	<p>Have you ever been dismissed from any volunteer or employment position or been asked to leave at the 
+end of your membership in a volunteer, civic or nonprofit organization?</p>
+	<div class="row">
+	  <div class="span1">
+		<label class="radio">
+		  <%= f.radio_button :dismiss_history, "false" , checked: true%>No		  
+        </label>
+      </div>
+	  <div class="span1">
+        <label class="radio">
+		  <%= f.radio_button :dismiss_history, "true" %>Yes
+        </label>
+	  </div>
+	</div>
+
+
+    <%= f.text_area :explanation, class: "field", rows: 5, placeholder: "If yes to any of the above two questions, please explain..." %>
+ 
+

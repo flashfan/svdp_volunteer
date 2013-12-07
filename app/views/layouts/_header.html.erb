@@ -1,0 +1,40 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <%= link_to "SVDP Volunteer System", root_path, id: "logo" %>
+      <nav>
+        <ul class="nav pull-right">     
+          <% if signed_in? %>
+		    <% if current_user.admin? %>
+			  <li><%= link_to "Volunteer", users_path %></li>
+			  <li id="fat-menu" class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  Schedule <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to "All Schedule", user_activities_path(current_user) %></li>
+				  <li><%= link_to "Schedule Search", activities_search_path %></li>
+                </ul>
+              </li>
+			<% else %>
+			  <li><%= link_to "Home", root_path %></li>
+			  <li><%= link_to "Schedule", user_activities_path(@current_user) %> </li>
+			  <li><%= link_to "Volunteer hours", user_volunteer_hours_path(@current_user) %></li>
+			<% end %>  
+            <li id="fat-menu" class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                Account <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "Settings", edit_user_path(current_user) %></li>
+                <li><%= link_to "Sign out", signout_path, method: "delete" %></li>
+              </ul>
+            </li>
+          <% else %>
+            <li><%= link_to "Sign in", signin_path %></li>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,27 @@
+ <% if @individual_application.new_record? %>
+ <h2>Step 5 of 5: Confirmation</h2>
+ <% end %>
+ 
+  <fieldset>
+    <legend>APPLICANT INFORMATION</legend>
+	<%= render 'applicant_information_step', :f => f %>
+	
+  </fieldset>
+  <br />
+  <fieldset>
+    <legend>EMERGENCY CONTACT INFORMATION</legend>
+	<%= render 'emergency_contact_step', :f => f %>
+	
+  </fieldset>
+  <br />
+  <fieldset>
+    <legend>PERSONAL REFERENCES</legend>
+	<%= render 'personal_references_step', :f => f %>
+
+  </fieldset>
+  <br />
+  <fieldset>
+    <legend>PERSONAL HISTORY</legend>
+	<%= render 'personal_history_step', :f => f %>
+
+  </fieldset>

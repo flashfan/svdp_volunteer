@@ -1,0 +1,21 @@
+<% if !@group_application.last_step? %>
+<h2>Step 3 of 5: History</h2>
+<% end %>
+  <p>To your knowledge, has anyone in the group ever been convicted of a criminal offense (felony or misdemeanor)? Answer 
+yes if anyone has entered a plea agreement, including a deferred sentence or deferred judgment arrangement in connection 
+with a criminal case:</p>
+	<div class="row">
+	  <div class="span1">
+		<label class="radio">
+		  <%= f.radio_button :criminal_history, "false" , checked: true%>No		  
+        </label>
+      </div>
+	  <div class="span1">
+        <label class="radio">
+		  <%= f.radio_button :criminal_history, "true" %>Yes
+        </label>
+	  </div>
+	</div>
+
+
+    <%= f.text_area :explanation, class: "field", rows: 5, placeholder: "If yes, please explain..." %>

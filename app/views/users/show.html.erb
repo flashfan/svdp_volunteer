@@ -1,0 +1,91 @@
+<% provide(:title, @user.name) %>
+<h1><%=@user.name%>'s Profile</h1>
+
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+        <%= @user.name %>
+      </h1>
+	  <br />
+	  <% if current_user.admin? %>
+	    <p><b>Status: </b><%= Status.find(@user.status).name %></p>
+	  <% end %>
+	  <p><b>Email: </b><%= @user.email %></p>
+	  <p><b>Phone: </b><%= @user.phone %></p>
+      <p><%= link_to 'Update profile', edit_user_path(@user) %></p>
+      <% if current_user.admin? && @user.status > 1 %>
+	    <p><%= link_to 'View schedule', user_activities_path(@user) %></p>
+	    <p><%= link_to 'View hours', user_volunteer_hours_path(@user) %></p>
+	  <% end %>	  
+    </section>
+  </aside>
+  <div class="span8">
+    <h4>Volunteer Preference</h4>
+    <%= form_tag("/users/change_preference", :method => "post") do %>	     
+	<div class="row">
+	  <div class="span3">
+	    <%= label_tag(:project) %>
+	  </div>
+	  
+      <div class="span2">
+	    <%= label_tag(:type) %>
+	  </div>
+	  
+      <div class="span2">
+	    <%= label_tag(:period) %>
+	  </div>
+	  
+      <div class="span3 margin-down">	    
+	    <% project_array = Project.all.map { |p| [p.name, p.id] } %>
+        <%= select_tag :project, options_for_select(project_array.unshift(['----', nil]), @user.preference_project) %>
+	  </div>
+	  
+      <div class="span2 margin-down">	    
+	    <% type_array = Status.where("id > ?", 1).all.map { |p| [p.name, p.id] } %>
+        <%= select_tag :type, options_for_select(type_array.unshift(['----', nil]), @user.preference_type) %>
+	  </div>
+	  
+      <div class="span2 margin-down">
+	    <% period_array = Period.all.map { |p| [p.name, p.id] } %>
+        <%= select_tag :period, options_for_select(period_array.unshift(['----', nil]), @user.preference_period) %>
+	  </div>	  
+
+	  <%= hidden_field_tag(:id, @user.id) %>
+	  <div class="span1">         
+        <%= submit_tag("Update", class: "btn btn-primary pull-right") %>
+      </div>
+      </div>		 
+    <% end %>
+  </div>
+  
+  <div class="span4">
+    <h4>Individual Application
+	  <% if @individual_application.nil?&&(!current_user.admin?)%>
+	    <%= link_to 'new', new_individual_application_path %>
+	  <% end %>		
+	</h4>
+	<% if !@individual_application.nil? %>
+      <ol class="applications">
+        <%= render @individual_application %>
+      </ol>
+    <% end %>
+  </div>
+  <div class="span4">
+    <h4>Group Applications
+	<% if !current_user.admin? %>
+	  <%= link_to 'new', new_group_application_path %>
+	<% end %>
+	</h4>
+    <% if @user.group_applications.any? %>
+      <ol class="applications">
+        <%= render @group_applications %>
+      </ol>
+      <%= will_paginate @group_applications %>
+    <% end %>
+  </div>
+</div>
+
+
+
+  

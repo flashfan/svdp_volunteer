@@ -1,0 +1,8 @@
+
+$('#event_time').hide();
+$('#event_project').hide();
+$('#event_remark').hide();
+$('#edit_event').hide();
+$('#delete_event').hide();
+$('#event_desc').html("<%= escape_javascript(render 'edit_form') %>");
+$('#event_desc').show();
